@@ -4,7 +4,7 @@ import List from "./components/List";
 import ListItem from "./components/ListItem";
 
 function App() {
-  // const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState(null);
   const [actors, setActors] = useState(null);
   const [cast, setCast] = useState([]);
   const [revealedActors, setRevealedActors] = useState(1);
