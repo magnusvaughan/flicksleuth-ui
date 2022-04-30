@@ -24,7 +24,7 @@ function App() {
       });
     };
     getData();
-  }, []);
+  }, [movie]);
 
   useEffect(() => {
     if (actors) {
