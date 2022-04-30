@@ -30,7 +30,7 @@ function App() {
     if (actors) {
       setCast((cast) => [...cast, actors[revealedActors - 1]]);
     }
-  });
+  }, [actors, revealedActors]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
