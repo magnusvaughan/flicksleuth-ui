@@ -4,7 +4,6 @@ import List from "./components/List";
 import ListItem from "./components/ListItem";
 
 function App() {
-  const [movie, setMovie] = useState(null);
   const [actors, setActors] = useState(null);
   const [cast, setCast] = useState([]);
   const [revealedActors, setRevealedActors] = useState(1);
@@ -16,7 +15,6 @@ function App() {
   useEffect(() => {
     const getData = () => {
       axios.get("http://127.0.0.1:8000/api/movie").then((response) => {
-        setMovie(response.data);
         setActors(response.data.actors);
         setCast(response.data.actors.slice(0, 1));
         setAnswer(response.data.title);
@@ -24,7 +22,7 @@ function App() {
       });
     };
     getData();
-  }, [movie]);
+  }, []);
 
   useEffect(() => {
     if (actors) {
