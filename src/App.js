@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import List from "./components/List";
 import ListItem from "./components/ListItem";
+import { API } from "./api";
 
 function App() {
   const [actors, setActors] = useState(null);
@@ -14,7 +15,10 @@ function App() {
 
   useEffect(() => {
     const getData = () => {
-      axios.get("http://127.0.0.1:8000/api/movie").then((response) => {
+      // To get this to work on live - need to look into setting up dev / prod urls
+      // Pretty sure they do this on JustDjango at some point
+      console.log(API.movie);
+      axios.get(API.movie).then((response) => {
         setActors(response.data.actors);
         setCast(response.data.actors.slice(0, 1));
         setAnswer(response.data.title);
@@ -28,7 +32,7 @@ function App() {
     if (actors) {
       setCast((cast) => [...cast, actors[revealedActors - 1]]);
     }
-  }, [actors, revealedActors]);
+  }, [revealedActors]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
