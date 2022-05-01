@@ -1,9 +1,13 @@
 export default function ListItem({ actor }) {
-    return (
-      <article className="flex items-start space-x-6 mt-5">
-        <div className="min-w-0 relative flex-auto">
-          <h2 className="font-semibold text-slate-900 truncate pr-20">{actor}</h2>
+  return (
+    <li className="py-2">
+      <div className="flex space-x-3">
+        <div className="flex-1 space-y-1">
+          <div className="flex items-center justify-center">
+            <h3 className="text-md font-normal">{actor}</h3>
+          </div>
         </div>
-      </article>
-    )
-  }
+      </div>
+    </li>
+  );
+}
