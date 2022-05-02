@@ -43,8 +43,7 @@ function App() {
     evt.preventDefault();
     if (guess.toLowerCase() === answer.toLowerCase()) {
       // setScore(availablePoints);
-      setFeedback(`You correctly guessed ${answer} with ${revealedActors} actors
-        revealed`);
+      setFeedback(`You got it with ${revealedActors} actors revealed`);
       setFinished(true);
     } else {
       setRevealedActors(revealedActors + 1);
@@ -74,7 +73,7 @@ function App() {
                 Movie name
               </dt>
               <dd className="text-3xl font-extrabold tracking-tight text-gray-700">
-                {answer.replace(/[a-zA-Z0-9+]/g, "X")}
+                {finished ? answer : answer.replace(/[a-zA-Z0-9+]/g, "X")}
               </dd>
             </div>
             <p className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
@@ -128,7 +127,7 @@ function App() {
               <div className="">
                 <button
                   onClick={refreshPage}
-                  className="mt-3 inline-flex items-center px-6 py-2 mx-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="mt-5 inline-flex items-center px-6 py-2 mx-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Play again
                 </button>
