@@ -13,7 +13,7 @@ function App() {
   const [guess, setGuess] = useState("");
   const [finished, setFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [score, setScore] = useState(0);
+  // const [score, setScore] = useState(0);
   const [availablePoints, setAvailablePoints] = useState(10);
   const [feedback, setFeedback] = useState(
     "Can you guess the movie from just the cast list? Actors are listed in credits order."
@@ -42,7 +42,7 @@ function App() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (guess.toLowerCase() === answer.toLowerCase()) {
-      setScore(availablePoints);
+      // setScore(availablePoints);
       setFeedback(`You correctly guessed ${answer} with ${revealedActors} actors
         revealed`);
       setFinished(true);
@@ -80,7 +80,7 @@ function App() {
             <p className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
               {feedback}
             </p>
-            <Score score={score} feedback={feedback} />
+            {/* <Score feedback={feedback} /> */}
             <div className={finished ? "hidden" : ""}>
               <div className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
                 <main className="text-center">
