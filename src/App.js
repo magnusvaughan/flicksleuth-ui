@@ -24,7 +24,7 @@ function App() {
   );
 
   const getClue = (clue) => {
-    return { name: "clue", value: clue };
+    return { name: "Year", value: clue };
   };
 
   const revealClue = () => {
