@@ -94,11 +94,12 @@ function App() {
               Can you guess the movie from the cast list?
             </p>
             <div className=" pt-6 text-center">
-              <dt className="text-xl font-extrabold tracking-tight text-gray-900">
+              {/* <dt className="text-xl font-extrabold tracking-tight text-gray-900">
                 Title
-              </dt>
+              </dt> */}
               <dd className="text-xl font-extrabold tracking-tight text-gray-600">
-                {finished ? answer : answer.replace(/[a-zA-Z0-9+]/g, "*")}
+                {/* {finished ? answer : answer.replace(/[a-zA-Z0-9+]/g, "*")} */}
+                {finished ? answer : null}
               </dd>
               {finished ? null : (
                 <Clue clue={clue} className={showClue ? "" : "hidden"} />
