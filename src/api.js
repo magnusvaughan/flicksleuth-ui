@@ -7,8 +7,6 @@ if (debug) {
 
 const apiURL = `${baseURL}/api`;
 
-console.log(apiURL);
-
 export const API = {
   movies: `${apiURL}/movies`,
   movie: `${apiURL}/movie`,

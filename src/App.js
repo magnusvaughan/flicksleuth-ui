@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import List from "./components/List";
 import ListItem from "./components/ListItem";
@@ -7,9 +7,7 @@ import { API } from "./api";
 
 function App() {
   const [actors, setActors] = useState(null);
-  const [year, setYear] = useState(null);
   const [clue, setClue] = useState(null);
-  const [clues, setClues] = useState(0);
   const [showClue, setShowClue] = useState(false);
   const [tweetMessage, setTweetMessage] = useState(true);
   const [cast, setCast] = useState([]);
@@ -19,9 +17,8 @@ function App() {
   const [finished, setFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [availablePoints, setAvailablePoints] = useState(10);
-  const [feedback, setFeedback] = useState(
-    "Can you guess the movie from just the cast list? Actors are listed in credits order."
-  );
+  const [feedback, setFeedback] = useState("");
+  const ref = useRef();
 
   const getClue = (clue) => {
     return { name: "Year", value: clue };
@@ -29,7 +26,6 @@ function App() {
 
   const revealClue = () => {
     setShowClue(true);
-    setClues(clues + 1);
   };
 
   useEffect(() => {
@@ -38,7 +34,6 @@ function App() {
       // Pretty sure they do this on JustDjango at some point
       axios.get(API.movie).then((response) => {
         setActors(response.data.actors);
-        setYear(response.data.year);
         setCast(response.data.actors.slice(0, 1));
         setAnswer(response.data.title);
         setClue(getClue(response.data.year));
@@ -57,21 +52,26 @@ function App() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (guess.toLowerCase() === answer.toLowerCase()) {
-      const clueSuffix = clues > 0 ? " clue" : "clues";
+      const clueSuffix = clue ? " clue" : "clues";
       setFeedback(
-        `You got it with ${revealedActors} actors revealed and ${clues} ${clueSuffix}`
+        `You got it with ${revealedActors} actors revealed and ${
+          clue ? "1" : "0"
+        } ${clueSuffix}`
       );
       setTweetMessage(
         `I got today's Flicksleuth with ${revealedActors} actor${
           revealedActors > 1 ? "s" : ""
-        } revealed and ${clues} ${clueSuffix}. Try it yourself at https://flicksleuth.com`
+        } revealed and ${
+          clue ? "1" : "0"
+        }${clueSuffix}. Try it yourself at https://flicksleuth.com`
       );
       setFinished(true);
     } else {
       setRevealedActors(revealedActors + 1);
       setAvailablePoints(availablePoints - 1);
-      setFeedback(`Wrong - it's not ${guess}. Try again`);
+      setFeedback(`No, not ${guess}. Try again`);
     }
+    ref.current.scrollIntoView();
     setGuess("");
   };
 
@@ -83,39 +83,53 @@ function App() {
     <p>Loading...</p>
   ) : (
     <>
-      <main>
+      <main ref={ref}>
         {/* Header */}
-        <div className="py-12 bg-gray-50 sm:py-12 min-h-screen">
-          <div className="max-w-md mx-auto pl-4 pr-8 sm:max-w-lg sm:px-6 lg:max-w-7xl lg:px-8">
-            <h1 className="text-4xl leading-10 font-extrabold tracking-tight text-gray-900 text-center sm:text-5xl sm:leading-none lg:text-6xl">
+        <div className="py-6 bg-gray-50 sm:py-6 md:py-12 min-h-screen">
+          <div className="max-w-md mx-auto pl-4 pr-4 sm:max-w-lg sm:px-6 lg:max-w-7xl lg:px-8">
+            <h1 className="text-4xl leading-10 font-extrabold tracking-tight text-gray-900 text-center sm:text-5xl sm:leading-none lg:text-6xl font-sans">
               Flicksleuth
             </h1>
+            <p className="text-center text-gray-500 pt-3 italic text-sm">
+              Can you guess the movie from the cast list?
+            </p>
             <div className=" pt-6 text-center">
-              <dt className="text-base font-medium text-gray-500">
-                Movie name
+              <dt className="text-xl font-extrabold tracking-tight text-gray-900">
+                Title
               </dt>
-              <dd className="text-3xl font-extrabold tracking-tight text-gray-700">
+              <dd className="text-xl font-extrabold tracking-tight text-gray-600">
                 {finished ? answer : answer.replace(/[a-zA-Z0-9+]/g, "*")}
               </dd>
+              {finished ? null : (
+                <Clue clue={clue} className={showClue ? "" : "hidden"} />
+              )}
+              {showClue ? null : finished ? null : (
+                <>
+                  <button
+                    onClick={revealClue}
+                    type="button"
+                    className="inline-flex text-center w-100 items-center mt-2 mb-2 px-6 py-2 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                  >
+                    Clue
+                  </button>
+                </>
+              )}
             </div>
-            <p className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
+            <p className="text-xl font-extrabold tracking-tight text-gray-600 text-center mt-3 h-100 min-h-fit">
               {feedback}
             </p>
-            {finished ? null : (
-              <Clue clue={clue} className={showClue ? "" : "invisible"} />
-            )}
 
             <div className={finished ? "hidden" : ""}>
               <div className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
                 <main className="text-center">
                   <form
                     onSubmit={handleSubmit}
-                    className="mt-5 flex-1 items-center flex-row"
+                    className="flex-1 items-center flex-row"
                   >
-                    <label className="text-2xl font-extrabold tracking-tight text-gray-900">
+                    <label className="text-xl font-extrabold tracking-tight text-gray-900">
                       <input
                         type="text"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="shadow appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl font-extrabold tracking-tight text-gray-900 text-center mt-3 "
                         value={guess}
                         onChange={(e) => setGuess(e.target.value)}
                       />
@@ -123,16 +137,9 @@ function App() {
                     <input
                       type="submit"
                       value="Guess"
-                      className="inline-flex m-1 items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex m-1 items-center px-6 py-2 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                       disabled={guess === ""}
                     />
-                    <button
-                      onClick={revealClue}
-                      type="button"
-                      className="inline-flex m-1 items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Clue
-                    </button>
                   </form>
                 </main>
               </div>
@@ -142,9 +149,9 @@ function App() {
             ) : (
               <>
                 <aside className="mt-5 text-xl font-semibold text-gray-900 text-center h-12">
-                  <h3 className="order-1 text-gray-900 text-3xl font-extrabold tracking-tight mt-9">
+                  <p className="text-xl font-extrabold tracking-tight text-gray-900">
                     Cast
-                  </h3>
+                  </p>
                   <List>
                     {cast.map((actor) => {
                       return <ListItem actor={actor} key={actor}></ListItem>;
@@ -159,12 +166,12 @@ function App() {
               <div className="">
                 <button
                   onClick={refreshPage}
-                  className="mt-5 inline-flex items-center px-6 py-2 mx-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="mt-5 inline-flex items-center px-6 py-2 mx-3 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                 >
                   Play again
                 </button>
                 <a
-                  class="twitter-share-button mt-5 inline-flex items-center px-6 py-2 mx-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="twitter-share-button mt-5 inline-flex items-center px-6 py-2 mx-3 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                   href={`https://twitter.com/intent/tweet?text=${tweetMessage}`}
                   data-url="https://flicksleuth.com"
                 >
