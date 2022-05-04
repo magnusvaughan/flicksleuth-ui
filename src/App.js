@@ -4,9 +4,6 @@ import List from "./components/List";
 import ListItem from "./components/ListItem";
 import Clue from "./components/Clue";
 import { API } from "./api";
-import ReactGA from "react-ga";
-const TRACKING_ID = "G-R3TF7CT4NE"; // OUR_TRACKING_ID
-ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const [actors, setActors] = useState(null);
