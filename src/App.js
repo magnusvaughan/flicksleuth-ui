@@ -122,11 +122,8 @@ function App() {
             <div className={finished ? "hidden" : ""}>
               <div className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
                 <main className="text-center">
-                  <form
-                    onSubmit={handleSubmit}
-                    className="flex-1 items-center flex-row"
-                  >
-                    <label className="text-xl font-extrabold tracking-tight text-gray-900">
+                  <form onSubmit={handleSubmit}>
+                    <label className="block text-xl font-extrabold tracking-tight text-gray-900">
                       <input
                         type="text"
                         className="shadow appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl font-extrabold tracking-tight text-gray-900 text-center mt-3 "
@@ -137,7 +134,7 @@ function App() {
                     <input
                       type="submit"
                       value="Guess"
-                      className="inline-flex m-1 items-center px-6 py-2 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                      className="m-1 items-center px-6 py-2 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                       disabled={guess === ""}
                     />
                   </form>
