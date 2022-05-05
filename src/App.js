@@ -139,7 +139,7 @@ function App() {
                 </>
               )}
             </div>
-            <p className="text-xl font-extrabold tracking-tight text-gray-600 text-center mt-3 h-100 min-h-fit">
+            <p className="text-xl font-extrabold tracking-tight text-gray-600 text-center mt-2 h-100 min-h-[1rem]">
               {feedback}
             </p>
 

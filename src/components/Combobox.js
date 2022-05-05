@@ -36,9 +36,9 @@ export default function Example(props) {
       as="div"
       value={selectedMovie}
       onChange={onMovieSelect}
-      className="max-w-sm m-auto"
+      className="max-w-xs mx-auto"
     >
-      <Combobox.Label className="block text-sm font-medium text-gray-700">
+      <Combobox.Label className="block text-sm font-medium text-gray-700 mb-2">
         Assigned to
       </Combobox.Label>
       <div className="relative mt-1">
