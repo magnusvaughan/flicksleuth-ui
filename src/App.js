@@ -11,6 +11,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState("");
   const [clue, setClue] = useState(null);
+  const [year, setYear] = useState(null);
   const [showClue, setShowClue] = useState(false);
   const [tweetMessage, setTweetMessage] = useState(true);
   const [cast, setCast] = useState([]);
@@ -40,6 +41,7 @@ function App() {
         setCast(response.data.actors.slice(0, 1));
         setAnswer(response.data.title);
         setClue(getClue(response.data.year));
+        setYear(response.data.year);
         setIsLoading(false);
       });
     };
@@ -49,7 +51,6 @@ function App() {
   useEffect(() => {
     const getApiMovieData = () => {
       axios.get(API.movies + "?query=" + query).then((response) => {
-        console.log(JSON.parse(response.data));
         setMovies(JSON.parse(response.data));
       });
     };
@@ -82,9 +83,9 @@ function App() {
       setRevealedActors(revealedActors + 1);
       setAvailablePoints(availablePoints - 1);
       let yearGuide = "";
-      if (parseInt(clue) > parseInt(movie.Year)) {
+      if (parseInt(year) > parseInt(movie.Year)) {
         yearGuide = "newer";
-      } else if (parseInt(clue) < parseInt(movie.Year)) {
+      } else if (parseInt(year) < parseInt(movie.Year)) {
         yearGuide = "older";
       } else {
         yearGuide = "made in the same year";
