@@ -3,10 +3,13 @@ import axios from "axios";
 import List from "./components/List";
 import ListItem from "./components/ListItem";
 import Clue from "./components/Clue";
+import Combobox from "./components/Combobox";
 import { API } from "./api";
 
 function App() {
   const [actors, setActors] = useState(null);
+  const [query, setQuery] = useState("");
+  const [movies, setMovies] = useState("");
   const [clue, setClue] = useState(null);
   const [showClue, setShowClue] = useState(false);
   const [tweetMessage, setTweetMessage] = useState(true);
@@ -44,14 +47,23 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const getApiMovieData = () => {
+      axios.get(API.movies + "?query=" + query).then((response) => {
+        console.log(JSON.parse(response.data));
+        setMovies(JSON.parse(response.data));
+      });
+    };
+    getApiMovieData();
+  }, [query]);
+
+  useEffect(() => {
     if (actors) {
       setCast((cast) => [...cast, actors[revealedActors - 1]]);
     }
   }, [revealedActors]);
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    if (guess.toLowerCase() === answer.toLowerCase()) {
+  const onMovieSelect = (movie) => {
+    if (movie.Title.toLowerCase() === answer.toLowerCase()) {
       const clueSuffix = clue ? " clue" : "clues";
       setFeedback(
         `You got it with ${revealedActors} actors revealed and ${
@@ -69,7 +81,17 @@ function App() {
     } else {
       setRevealedActors(revealedActors + 1);
       setAvailablePoints(availablePoints - 1);
-      setFeedback(`No, not ${guess}. Try again`);
+      let yearGuide = "";
+      if (clue > movie.Year) {
+        yearGuide = "newer";
+      } else if (clue < movie.Year) {
+        yearGuide = "older";
+      } else {
+        yearGuide = "made in the same year";
+      }
+      setFeedback(
+        `No, not ${movie.Title}. This movie is ${yearGuide}. Try again`
+      );
     }
     ref.current.scrollIntoView();
     setGuess("");
@@ -123,15 +145,12 @@ function App() {
             <div className={finished ? "hidden" : ""}>
               <div className="mt-6 max-w-3xl mx-auto text-xl leading-normal text-gray-500 text-center">
                 <main className="text-center">
-                  <form onSubmit={handleSubmit}>
-                    <label className="block text-xl font-extrabold tracking-tight text-gray-900">
-                      <input
-                        type="text"
-                        className="shadow appearance-none border rounded py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl font-extrabold tracking-tight text-gray-900 text-center mt-3 "
-                        value={guess}
-                        onChange={(e) => setGuess(e.target.value)}
-                      />
-                    </label>
+                  <form>
+                    <Combobox
+                      movies={movies}
+                      setQuery={setQuery}
+                      onMovieSelect={onMovieSelect}
+                    />
                     <input
                       type="submit"
                       value="Guess"
