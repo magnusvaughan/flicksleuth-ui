@@ -155,7 +155,7 @@ function App() {
                     <input
                       type="submit"
                       value="Guess"
-                      className="m-1 items-center px-6 py-2 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                      className="m-1 mt-3 items-center px-6 py-2 border border-transparent text-base font-semibold rounded-md shadow-sm text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                       disabled={guess === ""}
                     />
                   </form>

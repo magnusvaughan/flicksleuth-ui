@@ -45,7 +45,9 @@ export default function Example(props) {
         <Combobox.Input
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
           onChange={(event) => {
-            props.setQuery(event.target.value);
+            if (event.target.value.length > 2) {
+              props.setQuery(event.target.value);
+            }
           }}
           displayValue={(movie) => (movie ? movie.name : "")}
           onClick={() => setSelectedMovie(null)}
