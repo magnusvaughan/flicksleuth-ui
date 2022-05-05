@@ -82,9 +82,9 @@ function App() {
       setRevealedActors(revealedActors + 1);
       setAvailablePoints(availablePoints - 1);
       let yearGuide = "";
-      if (clue > movie.Year) {
+      if (parseInt(clue) > parseInt(movie.Year)) {
         yearGuide = "newer";
-      } else if (clue < movie.Year) {
+      } else if (parseInt(clue) < parseInt(movie.Year)) {
         yearGuide = "older";
       } else {
         yearGuide = "made in the same year";
