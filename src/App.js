@@ -88,9 +88,7 @@ function App() {
       } else {
         yearGuide = "made in the same year";
       }
-      setFeedback(
-        `No, not ${movie.Title}. This movie is ${yearGuide}. Try again`
-      );
+      setFeedback(`No, not ${movie.Title}. ${yearGuide}. Try again`);
     }
     ref.current.scrollIntoView();
     setGuess("");
