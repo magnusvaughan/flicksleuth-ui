@@ -104,10 +104,10 @@ function App() {
     <p>Loading...</p>
   ) : (
     <>
-      <div className="bg-white py-16 sm:py-24" ref={ref}>
+      <div className="bg-indigo-600 py-16 sm:py-24" ref={ref}>
         <div className="relative sm:py-16">
           <div aria-hidden="true" className="hidden sm:block">
-            <div className="absolute inset-y-0 left-0 w-1/2 bg-gray-50 rounded-r-3xl" />
+            <div className="absolute inset-y-0 left-0 w-1/2 bg-indigo-600 rounded-r-3xl" />
             <svg
               className="absolute top-8 left-1/2 -ml-3"
               width={404}
@@ -134,11 +134,6 @@ function App() {
                   />
                 </pattern>
               </defs>
-              <rect
-                width={404}
-                height={392}
-                fill="url(#8228f071-bcee-4ec8-905a-2a059a2cc4fb)"
-              />
             </svg>
           </div>
           <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
