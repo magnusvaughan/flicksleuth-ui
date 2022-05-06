@@ -26,7 +26,6 @@ export default function Example(props) {
   const [selectedMovie, setSelectedMovie] = useState();
 
   function onMovieSelect(movie) {
-    console.log(movie);
     setSelectedMovie(movie);
     props.onMovieSelect(movie);
   }
