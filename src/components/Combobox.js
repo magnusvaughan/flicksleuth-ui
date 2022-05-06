@@ -36,7 +36,7 @@ export default function Example(props) {
       as="div"
       value={selectedMovie}
       onChange={onMovieSelect}
-      className="max-w-xs mx-auto"
+      className="max-w-sm mx-auto"
     >
       <Combobox.Label className="block mt-3 text-sm text-indigo-200">
         Search movies
@@ -64,8 +64,8 @@ export default function Example(props) {
                 value={movie}
                 className={({ active }) =>
                   classNames(
-                    "relative cursor-default select-none py-2 pl-3 pr-9",
-                    active ? "bg-indigo-600 text-white" : "text-gray-900"
+                    "relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-indigo-200",
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-600"
                   )
                 }
               >
@@ -75,24 +75,26 @@ export default function Example(props) {
                       <img
                         src={movie.Poster}
                         alt=""
-                        className="h-24 w-24 flex-grow-0"
+                        className="h-16 flex-grow-0"
                       />
-                      <span
-                        className={classNames(
-                          "ml-3 truncate",
-                          selected && "font-semibold"
-                        )}
-                      >
-                        {movie.Title}
-                      </span>
-                      <span
-                        className={classNames(
-                          "ml-3 truncate bold",
-                          selected && "font-semibold"
-                        )}
-                      >
-                        {`${movie.Year}`}
-                      </span>
+                      <div className="flex flex-col">
+                        <div
+                          className={classNames(
+                            "ml-3",
+                            selected && "font-bold"
+                          )}
+                        >
+                          {movie.Title}
+                        </div>
+                        <div
+                          className={classNames(
+                            "ml-3 truncate bold",
+                            selected && "font-semibold"
+                          )}
+                        >
+                          {`${movie.Year}`}
+                        </div>
+                      </div>
                     </div>
 
                     {selected && (
