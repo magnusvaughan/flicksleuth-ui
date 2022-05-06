@@ -51,9 +51,6 @@ export default function Example(props) {
           displayValue={(movie) => (movie ? movie.name : "")}
           onClick={() => setSelectedMovie(null)}
         />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-          <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-        </Combobox.Button>
 
         {props.movies && props.movies.Search && props.movies.Search.length > 0 && (
           <Combobox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
