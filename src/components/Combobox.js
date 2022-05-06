@@ -38,8 +38,8 @@ export default function Example(props) {
       onChange={onMovieSelect}
       className="max-w-xs mx-auto"
     >
-      <Combobox.Label className="block text-sm font-medium text-gray-700 mb-2">
-        Assigned to
+      <Combobox.Label className="block mt-3 text-sm text-indigo-200">
+        Search movies
       </Combobox.Label>
       <div className="relative mt-1">
         <Combobox.Input
