@@ -82,11 +82,11 @@ function App() {
       setAvailablePoints(availablePoints - 1);
       let yearGuide = "";
       if (parseInt(year) > parseInt(movie.Year)) {
-        yearGuide = "newer";
+        yearGuide = "Newer";
       } else if (parseInt(year) < parseInt(movie.Year)) {
-        yearGuide = "older";
+        yearGuide = "Older";
       } else {
-        yearGuide = "made in the same year";
+        yearGuide = "Same year, though.";
       }
       setFeedback(`No, not ${movie.Title}. ${yearGuide}. Try again`);
     }
