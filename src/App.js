@@ -109,16 +109,13 @@ function App() {
     <p>Loading...</p>
   ) : (
     <>
-      <div
-        className="bg-blue-600 py-16 sm:py-24 h-screen flex align-center justify-center"
-        ref={ref}
-      >
-        <div className="relative sm:py-16">
+      <div className="bg-blue-600 py-16 sm:py-24 h-screen w-100" ref={ref}>
+        <div className="relative sm:py-16 w-100">
           <div aria-hidden="true" className="hidden sm:block">
-            <div className="absolute inset-y-0 left-0 w-1/2 bg-blue-600 rounded-r-3xl" />
+            <div className="absolute inset-y-0 left-0 w-100 bg-blue-600 rounded-r-3xl" />
           </div>
           <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className="relative rounded-2xl px-6 py-10 bg-blue-600 overflow-hidden shadow-xl sm:px-12 sm:py-20">
+            <div className="relative rounded-2xl px-6 py-10 bg-blue-600 overflow-hidden shadow-2xl sm:px-12 sm:py-20">
               <div
                 aria-hidden="true"
                 className="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0"

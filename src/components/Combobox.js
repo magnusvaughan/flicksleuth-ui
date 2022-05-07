@@ -35,7 +35,7 @@ export default function Example(props) {
       as="div"
       value={selectedMovie}
       onChange={onMovieSelect}
-      className="max-w-sm mx-auto"
+      className="max-w-xs mx-auto"
     >
       <Combobox.Label className="block mt-3 text-sm text-indigo-200">
         Search movies
