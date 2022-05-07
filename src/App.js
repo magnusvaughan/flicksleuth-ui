@@ -47,12 +47,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const getApiMovieData = () => {
-      axios.get(API.movies + "?query=" + query).then((response) => {
+    const request = axios.CancelToken.source(); // (*)
+
+    const getApiMovieData = async () => {
+      try {
+        const response = await axios.get(API.movies + "?query=" + query, {
+          cancelToken: request.token, // (*)
+        });
         setMovies(JSON.parse(response.data));
-      });
+      } catch (err) {}
     };
     getApiMovieData();
+
+    return () => request.cancel(); // (*)
   }, [query]);
 
   useEffect(() => {

@@ -46,6 +46,8 @@ export default function Example(props) {
           onChange={(event) => {
             if (event.target.value.length > 2) {
               props.setQuery(event.target.value);
+            } else {
+              props.setQuery("");
             }
           }}
           displayValue={(movie) => (movie ? movie.name : "")}
