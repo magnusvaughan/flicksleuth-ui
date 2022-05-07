@@ -8,6 +8,7 @@ import { API } from "./api";
 
 function App() {
   const [actors, setActors] = useState(null);
+  const [won, setWon] = useState(false);
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState("");
   const [clue, setClue] = useState(null);
@@ -69,7 +70,14 @@ function App() {
   }, [revealedActors]);
 
   const onMovieSelect = (movie) => {
-    if (movie.Title.toLowerCase() === answer.toLowerCase()) {
+    if (revealedActors === 9) {
+      setFeedback("Bad luck - you didn't get it today.");
+      setTweetMessage(
+        `I couldn't quite get today's Flicksleuth. Try it yourself at https://flicksleuth.com`
+      );
+      setFinished(true);
+    } else if (movie.Title.toLowerCase() === answer.toLowerCase()) {
+      setWon(true);
       const clueSuffix = showClue ? " clue" : "clues";
       setFeedback(
         `You got it with ${revealedActors} actors revealed and ${
@@ -109,8 +117,11 @@ function App() {
     <p>Loading...</p>
   ) : (
     <>
-      <div className="bg-blue-600 py-16 sm:py-24 h-screen w-100" ref={ref}>
-        <div className="relative sm:py-16 w-100">
+      <div
+        className="bg-blue-600 py-16 sm:py-6 h-fit min-h-screen w-100"
+        ref={ref}
+      >
+        <div className="relative sm:py-3 w-100">
           <div aria-hidden="true" className="hidden sm:block">
             <div className="absolute inset-y-0 left-0 w-100 bg-blue-600 rounded-r-3xl" />
           </div>
@@ -132,7 +143,7 @@ function App() {
                 <div className=" pt-6 text-center">
                   <dd className="text-xl font-extrabold tracking-tight text-white">
                     {/* {finished ? answer : answer.replace(/[a-zA-Z0-9+]/g, "*")} */}
-                    {finished ? `${answer} is correct!` : null}
+                    {finished ? (won ? `${answer} is correct!` : null) : null}
                   </dd>
                   {finished ? null : (
                     <Clue clue={clue} className={showClue ? "" : "hidden"} />
