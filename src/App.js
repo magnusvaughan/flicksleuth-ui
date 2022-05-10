@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useReward } from "react-rewards";
 import List from "./components/List";
 import ListItem from "./components/ListItem";
 import Clue from "./components/Clue";
@@ -24,6 +25,7 @@ function App() {
   const [availablePoints, setAvailablePoints] = useState(10);
   const [feedback, setFeedback] = useState("");
   const ref = useRef();
+  const { reward, isAnimating } = useReward("rewardId", "confetti");
 
   const getClue = (clue) => {
     return { name: "Year", value: clue };
@@ -84,6 +86,7 @@ function App() {
           showClue ? "1" : "0"
         } ${clueSuffix}`
       );
+      reward();
       setTweetMessage(
         `I got today's Flicksleuth with ${revealedActors} actor${
           revealedActors > 1 ? "s" : ""
@@ -230,6 +233,7 @@ function App() {
                         Tweet Result
                       </a>
                     </div>
+                    <span id="rewardId" />
                   </div>
                 </div>
               </div>
